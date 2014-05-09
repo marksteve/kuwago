@@ -14,7 +14,7 @@ var Map = React.createClass({
     var mapOptions = {
       zoom: 15,
       center: loc,
-      mapTypeId: google.maps.MapTypeId.SATELLITE
+      mapTypeId: google.maps.MapTypeId.HYBRID
     };
     var map = new google.maps.Map(this.getDOMNode(), mapOptions);
     var marker = new google.maps.Marker({
