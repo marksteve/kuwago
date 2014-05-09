@@ -7,12 +7,13 @@
 
 function generate_data($seed) {
   srand($seed);
+  $a = 200;
   $rainfall = array();
   $slope = array();
   $rainfall_threshold = rand() * 0.00000001;
   $slope_threshold = rand() * 0.00000001;
   $base = time() - 30 * 24 * 60 * 60;
-  for ($i = 0; $i < 20; $i++) {
+  for ($i = 0; $i < $a; $i++) {
     if (rand() * 0.0000000005 < 0.2) {
       $c = rand() * 0.00000001;
     } else {
@@ -20,12 +21,12 @@ function generate_data($seed) {
     }
     $rainfall[] = array(
       'threshold' => $rainfall_threshold,
-      'x' => $base - ($i * 129600),
+      'x' => date('m/d/Y', $base - (($a - $i) * 129600)),
       'y' => $c + rand() * 0.000000001,
     );
     $slope[] = array(
       'threshold' => $slope_threshold,
-      'x' => $base - ($i * 129600),
+      'x' => date('m/d/Y', $base - (($a - $i) * 129600)),
       'y' => $c + rand() * 0.000000001,
     );
   }

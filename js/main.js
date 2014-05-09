@@ -5,6 +5,12 @@ function api(path) {
 }
 
 var Map = React.createClass({
+  shouldComponentUpdate: function(nextProps) {
+    return (
+      !this.props.location ||
+      nextProps.location.name != this.props.location.name
+    );
+  },
   componentDidUpdate: function() {
     if (!this.props.location) return;
     var loc = new google.maps.LatLng(
@@ -33,11 +39,15 @@ var Map = React.createClass({
 });
 
 var TimeSeriesGraph = React.createClass({
-  componentDidUpdate: function() {
+  componentWillMount: function() {
+    this.animated = false;
+  },
+  componentDidUpdate: function(prevProps) {
     var ctx = this.refs.canvas.getDOMNode().getContext('2d');
     var labels = [];
     var data = [];
-    this.props.data.forEach(function(d) {
+    var pos = parseInt(this.props.pos, 10);
+    this.props.data.slice(pos, pos + 19).forEach(function(d) {
       labels.push(d.x);
       data.push(d.y);
     });
@@ -56,8 +66,10 @@ var TimeSeriesGraph = React.createClass({
       bezierCurve: false,
       scaleLineColor: "#999",
       scaleFontColor: "#999",
-      scaleShowGridLines: false
+      scaleShowGridLines: false,
+      animation: !this.animated
     });
+    this.animated = true;
   },
   render: function() {
     var width = window.screen.width / 2 - 100;
@@ -104,19 +116,21 @@ var Details = React.createClass({
         <div id="graphs">
           <TimeSeriesGraph
             data={this.props.rainfall}
+            pos={this.props.pos}
             title="Rainfall"
           />
           <Value
             unit="mm"
-            data={this.props.rainfall[this.props.rainfall.length - 1]}
+            data={this.props.rainfall[this.props.pos + 19]}
           />
           <TimeSeriesGraph
             data={this.props.slope}
+            pos={this.props.pos}
             title="Slope displacement"
           />
           <Value
             unit="mm"
-            data={this.props.slope[this.props.slope.length - 1]}
+            data={this.props.slope[this.props.pos + 19]}
           />
         </div>
       </div>
@@ -127,6 +141,7 @@ var Details = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
+      pos: 0,
       locations: [],
       currLocation: null
     };
@@ -140,6 +155,9 @@ var App = React.createClass({
       this.setState({currLocation: resp[0]});
       this.setState({locations: resp});
     }).bind(this));
+    setInterval((function() {
+      this.setState({pos: (this.state.pos + 1) % 199});
+    }).bind(this), 3000);
   },
   changeLocation: function(e) {
     this.setState({
@@ -151,6 +169,7 @@ var App = React.createClass({
     if (this.state.currLocation) {
       details = (
         <Details
+          pos={this.state.pos}
           locations={this.state.locations}
           rainfall={this.state.currLocation.rainfall}
           slope={this.state.currLocation.slope}
