@@ -7,10 +7,14 @@ function api(path) {
 var Map = React.createClass({
   componentDidUpdate: function() {
     if (!this.props.location) return;
-    var loc = new google.maps.LatLng(this.props.location.x, this.props.location.y);
+    var loc = new google.maps.LatLng(
+      this.props.location.x,
+      this.props.location.y
+    );
     var mapOptions = {
       zoom: 15,
-      center: loc
+      center: loc,
+      mapTypeId: google.maps.MapTypeId.SATELLITE
     };
     var map = new google.maps.Map(this.getDOMNode(), mapOptions);
     var marker = new google.maps.Marker({
@@ -28,31 +32,24 @@ var Map = React.createClass({
   }
 });
 
-function randomData(x) {
-  var data = {
-    labels: [],
-    data: []
-  };
-  for (var i = 0; i < x; i++) {
-    data.labels.push(i);
-    data.data.push(Math.random() * 10);
-  }
-  return data;
-}
-
 var TimeSeriesGraph = React.createClass({
-  componentDidMount: function() {
+  componentDidUpdate: function() {
     var ctx = this.refs.canvas.getDOMNode().getContext('2d');
-    var data = randomData(10);
+    var labels = [];
+    var data = [];
+    this.props.data.forEach(function(d) {
+      labels.push(d.x);
+      data.push(d.y);
+    });
     new Chart(ctx).Line({
-      labels: data.labels,
+      labels: labels,
       datasets: [
         {
           fillColor: "rgba(128, 192, 255, 0.1)",
           strokeColor: "rgba(128, 192, 255, 1)",
           pointColor: "rgba(128, 192, 255, 1)",
           pointStrokeColor: "#333",
-          data: data.data
+          data: data
         }
       ]
     }, {
@@ -75,9 +72,9 @@ var TimeSeriesGraph = React.createClass({
 
 var Value = React.createClass({
   render: function() {
-    var current = Math.ceil(Math.random() * 100);
-    var threshold = Math.ceil(Math.random() * 100);
     var unit = this.props.unit;
+    var current = Math.round(this.props.data.y);
+    var threshold = Math.round(this.props.data.threshold);
     var className = "graph value";
     if (current >= threshold) {
       className += " warning";
@@ -105,10 +102,22 @@ var Details = React.createClass({
           <select onChange={this.props.onChangeLocation}>{options}</select>
         </div>
         <div id="graphs">
-          <TimeSeriesGraph title="Rainfall" />
-          <Value unit="mm" />
-          <TimeSeriesGraph title="Slope displacement" />
-          <Value unit="mm" />
+          <TimeSeriesGraph
+            data={this.props.rainfall}
+            title="Rainfall"
+          />
+          <Value
+            unit="mm"
+            data={this.props.rainfall[this.props.rainfall.length - 1]}
+          />
+          <TimeSeriesGraph
+            data={this.props.slope}
+            title="Slope displacement"
+          />
+          <Value
+            unit="mm"
+            data={this.props.slope[this.props.slope.length - 1]}
+          />
         </div>
       </div>
     );
@@ -119,9 +128,7 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       locations: [],
-      currLocation: null,
-      slope: [],
-      rainfall: []
+      currLocation: null
     };
   },
   componentWillMount: function() {
@@ -140,14 +147,28 @@ var App = React.createClass({
     });
   },
   render: function() {
+    var details;
+    if (this.state.currLocation) {
+      details = (
+        <Details
+          locations={this.state.locations}
+          rainfall={this.state.currLocation.rainfall}
+          slope={this.state.currLocation.slope}
+          onChangeLocation={this.changeLocation}
+        />
+      );
+    } else {
+      details = (
+        <p>Loading&hellip;</p>
+      );
+    }
     return (
       <div id="app">
-        <div id="map"><Map location={this.state.currLocation} /></div>
+        <div id="map">
+          <Map location={this.state.currLocation} />
+        </div>
         <div id="details">
-          <Details
-            locations={this.state.locations}
-            onChangeLocation={this.changeLocation}
-          />
+          {details}
         </div>
       </div>
     );
