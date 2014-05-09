@@ -1,5 +1,10 @@
 /** @jsx React.DOM */
 
+function round(x, y) {
+  y = y || 2;
+  return Math.floor(x * Math.pow(10, y)) / Math.pow(10, y);
+}
+
 function api(path) {
   return '/thatsmyboard/api/index.php?__route__=' + path;
 }
@@ -47,9 +52,11 @@ var TimeSeriesGraph = React.createClass({
     var labels = [];
     var data = [];
     var pos = parseInt(this.props.pos, 10);
+    var y;
     this.props.data.slice(pos, pos + 19).forEach(function(d) {
       labels.push(d.x);
       data.push(d.y);
+      y = d.y;
     });
     new Chart(ctx).Line({
       labels: labels,
@@ -85,8 +92,8 @@ var TimeSeriesGraph = React.createClass({
 var Value = React.createClass({
   render: function() {
     var unit = this.props.unit;
-    var current = Math.round(this.props.data.y);
-    var threshold = Math.round(this.props.data.threshold);
+    var current = round(this.props.data.y);
+    var threshold = round(this.props.data.threshold);
     var className = "graph value";
     if (current >= threshold) {
       className += " warning";
@@ -102,8 +109,8 @@ var Value = React.createClass({
 
 var Status = React.createClass({
   render: function() {
-    var current = Math.round(this.props.data.y);
-    var threshold = Math.round(this.props.data.threshold);
+    var current = round(this.props.data.y);
+    var threshold = round(this.props.data.threshold);
     var className = "graph status";
     var status;
     if (current >= threshold) {
@@ -142,8 +149,8 @@ var Details = React.createClass({
         <option key={i} value={i}>{option.name}</option>
       );
     });
-    var currRainfall = this.props.rainfall[this.props.pos + 19];
-    var currSlope = this.props.slope[this.props.pos + 19];
+    var currRainfall = this.props.rainfall[this.props.pos + 18];
+    var currSlope = this.props.slope[this.props.pos + 18];
     return (
       <div>
         <div id="location">
@@ -200,7 +207,7 @@ var App = React.createClass({
       this.setState({locations: resp});
     }).bind(this));
     setInterval((function() {
-      this.setState({pos: (this.state.pos + 1) % 199});
+      this.setState({pos: this.state.pos + 1});
     }).bind(this), 3000);
   },
   changeLocation: function(e) {
