@@ -3,6 +3,8 @@ include_once '../epiphany/src/Epi.php';
 Epi::setPath('base', '../epiphany/src');
 Epi::init('api');
 
+date_default_timezone_set('UTC');
+
 // The API class
 include_once 'class.board_api.php';
 
