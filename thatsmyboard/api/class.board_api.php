@@ -67,6 +67,22 @@ class BoardApi {
           'x' => '17.846754',
           'y' => '121.729782',
         )
+      ),
+      array_merge(
+        generate_data(49821421),
+        array(
+          'name' => 'Sorsogon',
+          'x' => '13.005896',
+          'y' => '124.016998',
+        )
+      ),
+      array_merge(
+        generate_data(38921732),
+        array(
+          'name' => 'Mabitac, Laguna',
+          'x' => '14.451325',
+          'y' => '121.422581',
+        )
       )
     );
   }
