@@ -10,34 +10,43 @@ class BoardApi {
 
   public function locations() {
     return array (
-        array(
-        array('name' => 'Tublay'),
-        array('x' => '16.522999'),
-        array('y' => '120.61747')
+      array(
+        'name' => 'Tublay',
+        'x' => '16.522999',
+        'y' => '120.61747'
       ),
       array(
-        array('name' => 'Rizal'),
-        array('x' => '14.112104'),
-        array('y' => '121.394779')
+        'name' => 'Rizal',
+        'x' => '14.112104',
+        'y' => '121.394779'
       ),
       array(
-        array('name' => 'Amulung'),
-        array('x' => '17.846754'),
-        array('y' => '121.729782')
-      ),
-    )
-  }
-
-  public function landslide() {
-    return array(
-      array('threshold' => 'Marikina'),
-      array('x' => '14.657582'),
-      array('y' => '121.063314'),
-      array('status' => '14.657582')
+        'name' => 'Amulung',
+        'x' => '17.846754',
+        'y' => '121.729782'
+      )
     );
   }
 
-  public function rainfall() {
-    return "RAIN";
+  public function slope($location) {
+    return array(
+      array(
+        'threshold' => 'Marikina',
+        'x' => '14.657582',
+        'y' => '121.063314',
+        'status' => '14.657582'
+      )
+    );
+  }
+
+  public function rainfall($location) {
+    return array(
+      array(
+        'threshold' => 'Marikina',
+        'x' => '14.657582',
+        'y' => '121.063314',
+        'status' => '14.657582'
+      )
+    );
   }
 }
