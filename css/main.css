@@ -54,6 +54,7 @@ body, select, input {
   padding: 1em;
   border: 2px white solid;
   margin-bottom: 1em;
+  vertical-align: top;
 }
 
 #graphs .graph h2 {
@@ -66,13 +67,24 @@ body, select, input {
 }
 
 #graphs .graph.value {
-  width: calc(50% - 1em);
+  height: 14rem;
+  margin-right: 0.5em;
+  width: calc(50% - 0.5em);
   display: inline-block;
   text-align: center;
-  padding-bottom: 2em;
 }
 
 #graphs .graph.value .current {
   font-weight: bold;
   font-size: 400%;
 }
+
+#graphs .graph.status {
+  height: 14rem;
+  font-size: 150%;
+  margin-left: 0.5em;
+  width: calc(50% - 0.5em);
+  display: inline-block;
+  text-align: center;
+}
+

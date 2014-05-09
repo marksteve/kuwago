@@ -100,6 +100,40 @@ var Value = React.createClass({
   }
 });
 
+var Status = React.createClass({
+  render: function() {
+    var current = Math.round(this.props.data.y);
+    var threshold = Math.round(this.props.data.threshold);
+    var className = "graph status";
+    var status;
+    if (current >= threshold) {
+      className += " warning";
+      switch (this.props.type) {
+        case 'rainfall':
+          status = "Rainfall intensity at critical level. Chance of flooding is high.";
+          break;
+        case 'slope':
+          status = "Slope displacement at critical level. Chance of soil erosion is high.";
+          break;
+      }
+    } else {
+      switch (this.props.type) {
+        case 'rainfall':
+          status = "Rainfall intensity at regular level.";
+          break;
+        case 'slope':
+          status = "Slope displacement at regular level.";
+          break;
+      }
+    }
+    return (
+      <div className={className}>
+        {status}
+      </div>
+    );
+  }
+});
+
 var Details = React.createClass({
   render: function() {
     var options = [];
@@ -108,6 +142,8 @@ var Details = React.createClass({
         <option key={i} value={i}>{option.name}</option>
       );
     });
+    var currRainfall = this.props.rainfall[this.props.pos + 19];
+    var currSlope = this.props.slope[this.props.pos + 19];
     return (
       <div>
         <div id="location">
@@ -121,7 +157,11 @@ var Details = React.createClass({
           />
           <Value
             unit="mm"
-            data={this.props.rainfall[this.props.pos + 19]}
+            data={currRainfall}
+          />
+          <Status
+            type="rainfall"
+            data={currRainfall}
           />
           <TimeSeriesGraph
             data={this.props.slope}
@@ -130,7 +170,11 @@ var Details = React.createClass({
           />
           <Value
             unit="mm"
-            data={this.props.slope[this.props.pos + 19]}
+            data={currSlope}
+          />
+          <Status
+            type="slope"
+            data={currSlope}
           />
         </div>
       </div>
@@ -178,7 +222,9 @@ var App = React.createClass({
       );
     } else {
       details = (
-        <p>Loading&hellip;</p>
+        <div id="graphs">
+          <div className="graph">Loading&hellip;</div>
+        </div>
       );
     }
     return (
