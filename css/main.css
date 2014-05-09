@@ -1,0 +1,78 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  background: #333;
+}
+
+body, select, input {
+  font: 20px/1.5 Arial, sans-serif;
+}
+
+#app {
+  position: relative;
+}
+
+#map {
+  position: fixed;
+  background: white;
+  top: 0;
+  left: 0;
+  right: 50%;
+  bottom: 0;
+}
+
+#details {
+  position: absolute;
+  color: white;
+  top: 0;
+  left: 50%;
+  right: 0;
+}
+
+#location {
+  margin: 1em;
+}
+
+#location select {
+  width: 100%;
+  font-size: 200%;
+  font-weight: bold;
+  padding: 0.2em 0.4em;
+  border: 2px solid white;
+  background: #333;
+  color: white;
+}
+
+#graphs {
+  margin: 1em;
+}
+
+#graphs .graph {
+  padding: 1em;
+  border: 2px white solid;
+  margin-bottom: 1em;
+}
+
+#graphs .graph h2 {
+  margin: 0;
+}
+
+#graphs .graph.warning {
+  color: #f44;
+  border-color: #f44;
+}
+
+#graphs .graph.value {
+  width: calc(50% - 1em);
+  display: inline-block;
+  text-align: center;
+  padding-bottom: 2em;
+}
+
+#graphs .graph.value .current {
+  font-weight: bold;
+  font-size: 400%;
+}
