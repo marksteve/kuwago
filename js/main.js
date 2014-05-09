@@ -93,13 +93,16 @@ var Value = React.createClass({
 
 var Details = React.createClass({
   render: function() {
+    var options = [];
+    this.props.locations.forEach(function(option, i) {
+      options.push(
+        <option key={i} value={i}>{option.name}</option>
+      );
+    });
     return (
       <div>
         <div id="location">
-          <select>
-            <option>Marikina</option>
-            <option>Rizal</option>
-          </select>
+          <select onChange={this.props.onChangeLocation}>{options}</select>
         </div>
         <div id="graphs">
           <TimeSeriesGraph title="Rainfall" />
@@ -128,13 +131,24 @@ var App = React.createClass({
       url: api('/locations.json')
     }).done((function(resp) {
       this.setState({currLocation: resp[0]});
+      this.setState({locations: resp});
     }).bind(this));
+  },
+  changeLocation: function(e) {
+    this.setState({
+      currLocation: this.state.locations[e.target.value]
+    });
   },
   render: function() {
     return (
       <div id="app">
         <div id="map"><Map location={this.state.currLocation} /></div>
-        <div id="details"><Details /></div>
+        <div id="details">
+          <Details
+            locations={this.state.locations}
+            onChangeLocation={this.changeLocation}
+          />
+        </div>
       </div>
     );
   }
