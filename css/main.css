@@ -72,6 +72,16 @@ body, select, input {
   width: calc(50% - 0.5em);
   display: inline-block;
   text-align: center;
+  background: no-repeat center center;
+  background-size: cover;
+}
+
+#graphs .graph.rainfall {
+  background-image: url(../images/rainfall.png);
+}
+
+#graphs .graph.slope {
+  background-image: url(../images/slope.png);
 }
 
 #graphs .graph.value .current {

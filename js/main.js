@@ -52,11 +52,9 @@ var TimeSeriesGraph = React.createClass({
     var labels = [];
     var data = [];
     var pos = parseInt(this.props.pos, 10);
-    var y;
     this.props.data.slice(pos, pos + 19).forEach(function(d) {
       labels.push(d.x);
       data.push(d.y);
-      y = d.y;
     });
     new Chart(ctx).Line({
       labels: labels,
@@ -94,7 +92,7 @@ var Value = React.createClass({
     var unit = this.props.unit;
     var current = round(this.props.data.y);
     var threshold = round(this.props.data.threshold);
-    var className = "graph value";
+    var className = "graph value " + this.props.type;
     if (current >= threshold) {
       className += " warning";
     }
@@ -163,6 +161,7 @@ var Details = React.createClass({
             title="Rainfall"
           />
           <Value
+            type="rainfall"
             unit="mm"
             data={currRainfall}
           />
@@ -176,6 +175,7 @@ var Details = React.createClass({
             title="Slope displacement"
           />
           <Value
+            type="slope"
             unit="mm"
             data={currSlope}
           />
