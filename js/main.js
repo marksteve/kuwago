@@ -56,13 +56,25 @@ var TimeSeriesGraph = React.createClass({
       labels.push(d.x);
       data.push(d.y);
     });
+    switch (this.props.type) {
+      case 'rainfall':
+        var fillColor = "rgba(128, 192, 255, 0.1)";
+        var strokeColor = "rgba(128, 192, 255, 1)";
+        var pointColor = "rgba(128, 192, 255, 1)";
+        break;
+      case 'slope':
+        var fillColor = "rgba(256, 192, 128, 0.1)";
+        var strokeColor = "rgba(256, 192, 128, 1)";
+        var pointColor = "rgba(256, 192, 128, 1)";
+        break;
+    }
     new Chart(ctx).Line({
       labels: labels,
       datasets: [
         {
-          fillColor: "rgba(128, 192, 255, 0.1)",
-          strokeColor: "rgba(128, 192, 255, 1)",
-          pointColor: "rgba(128, 192, 255, 1)",
+          fillColor: fillColor,
+          strokeColor: strokeColor,
+          pointColor: pointColor,
           pointStrokeColor: "#333",
           data: data
         }
@@ -156,6 +168,7 @@ var Details = React.createClass({
         </div>
         <div id="graphs">
           <TimeSeriesGraph
+            type="rainfall"
             data={this.props.rainfall}
             pos={this.props.pos}
             title="Rainfall"
@@ -170,6 +183,7 @@ var Details = React.createClass({
             data={currRainfall}
           />
           <TimeSeriesGraph
+            type="slope"
             data={this.props.slope}
             pos={this.props.pos}
             title="Slope displacement"
