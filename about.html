@@ -3,27 +3,35 @@
 <head>
   <title>MOOM MANES!</title>
   <style>
-  html, body {
+  html {
+    background: #000;
+  }
+  html, body, #manes {
     height: 100%;
     padding: 0;
     margin: 0;
   }
-  body {
+  #manes {
     background: url(images/moom-manes.png) no-repeat center center;
     -webkit-animation: moom 0.1s infinite;
   }
   @-webkit-keyframes moom {
     from {
       background-color: #ff0;
+      -webkit-transform: translate(10px, -10px) rotate(0.8deg);
     }
     33% {
       background-color: #0ff;
+      -webkit-transform: translate(6px, 8px) rotate(-1deg);
     }
     66% {
       background-color: #f0f;
+      -webkit-transform: translate(-12px, -4px) rotate(0.5deg);
     }
   }
   </style>
 </head>
-<body></body>
+<body>
+  <div id="manes"></div>
+</body>
 </html>
