@@ -43,13 +43,21 @@ class BoardApi {
   }
 
   public function locations() {
-    return array (
+    return array(
       array_merge(
-        generate_data(9087312),
+        generate_data(32091831),
         array(
-          'name' => 'Tublay',
-          'x' => '16.522999',
-          'y' => '120.61747',
+          'name' => 'Amulung',
+          'x' => '17.846754',
+          'y' => '121.729782',
+        )
+      ),
+      array_merge(
+        generate_data(38921732),
+        array(
+          'name' => 'Mabitac, Laguna',
+          'x' => '14.451325',
+          'y' => '121.422581',
         )
       ),
       array_merge(
@@ -61,14 +69,6 @@ class BoardApi {
         )
       ),
       array_merge(
-        generate_data(32091831),
-        array(
-          'name' => 'Amulung',
-          'x' => '17.846754',
-          'y' => '121.729782',
-        )
-      ),
-      array_merge(
         generate_data(49821421),
         array(
           'name' => 'Sorsogon',
@@ -77,11 +77,11 @@ class BoardApi {
         )
       ),
       array_merge(
-        generate_data(38921732),
+        generate_data(9087312),
         array(
-          'name' => 'Mabitac, Laguna',
-          'x' => '14.451325',
-          'y' => '121.422581',
+          'name' => 'Tublay',
+          'x' => '16.522999',
+          'y' => '120.61747',
         )
       )
     );
