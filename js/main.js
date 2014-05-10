@@ -79,7 +79,7 @@ var TimeSeriesGraph = React.createClass({
     this.animated = true;
   },
   render: function() {
-    var width = window.screen.width / 2 - 100;
+    var width = $(window).width() / 2 - 100;
     return (
       <div className="graph timeseries">
         <h2>{this.props.title}</h2>

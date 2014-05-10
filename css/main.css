@@ -67,7 +67,7 @@ body, select, input {
 }
 
 #graphs .graph.value {
-  height: 12rem;
+  height: 11rem;
   margin-right: 0.5em;
   width: calc(50% - 0.5em);
   display: inline-block;
@@ -76,12 +76,13 @@ body, select, input {
 
 #graphs .graph.value .current {
   font-weight: bold;
-  font-size: 300%;
+  font-size: 250%;
 }
 
 #graphs .graph.status {
-  height: 12rem;
-  font-size: 150%;
+  height: 11rem;
+  padding-top: 2rem;
+  font-size: 120%;
   margin-left: 0.5em;
   width: calc(50% - 0.5em);
   display: inline-block;
