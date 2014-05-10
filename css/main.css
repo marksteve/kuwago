@@ -12,7 +12,28 @@ body, select, input {
 }
 
 #app {
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#app h1 {
+  line-height: 1;
+  color: white;
+  font-size: 100%;
+  position: fixed;
+  left: 1em;
+  bottom: 2em;
+  margin: 0;
+  z-index: 1000;
+  text-shadow: 0 0 5px #000;
+}
+
+#app h1 pre {
+  font-family: ubuntu mono, monospace;
+  margin: 0;
 }
 
 #map {

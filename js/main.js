@@ -248,8 +248,18 @@ var App = React.createClass({
         </div>
       );
     }
+    var owl =
+      "   ___\n" +
+      "__/_[])\n" +
+      "  {O,O}\n" +
+      "  /)_)\n" +
+      '   " "';
     return (
       <div id="app">
+        <h1>
+          <pre>{owl}</pre>
+          <span>KUWAGO</span>
+        </h1>
         <div id="map">
           <Map location={this.state.currLocation} />
         </div>
